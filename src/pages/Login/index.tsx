@@ -3,17 +3,22 @@ import Box from "@mui/material/Box";
 import React, { useState, ChangeEvent, MouseEvent } from "react";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import theme from "../../config/theme";
-import { useLogin } from "./hooks/UseLogin";
+import { UseLogin } from "./hooks/UseLogin";
 
 const LoginErrorDefaultState = {
   username: false,
   password: false,
 };
 
+export enum LoginInputLabel {
+  USERNAME = "Nombre de usuario",
+  PASSWORD = "Contraseña",
+}
+
 const Login: React.FC = () => {
-  const { handleLogin, loading, error } = useLogin();
+  const { handleLogin, loading, error } = UseLogin();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [formError, setFormError] = useState(LoginErrorDefaultState);
@@ -93,18 +98,16 @@ const Login: React.FC = () => {
             onChange={handleChangeUsername}
             value={username}
             type="text"
-            label="Nombre de usuario"
+            label={LoginInputLabel.USERNAME}
             variant="outlined"
-            name="username"
           />
           <TextField
             error={formError.password}
             onChange={handleChangePassword}
             value={password}
             type="password"
-            label="Contraseña"
+            label={LoginInputLabel.PASSWORD}
             variant="outlined"
-            name="password"
           />
         </Box>
         <Button
@@ -113,7 +116,6 @@ const Login: React.FC = () => {
           size="large"
           variant="contained"
           sx={{ width: "165px" }}
-          name="submit"
         >
           Login
         </Button>

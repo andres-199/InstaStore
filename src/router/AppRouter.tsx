@@ -7,6 +7,7 @@ import {
 import LoadingScreen from "../components/LoadingScreen";
 import SessionValidator from "./validators/session.validator";
 import { Routes } from "./routes";
+import LoginValidator from "./validators/login.validator";
 
 const Login = lazy(() => import("../pages/Login"));
 const OrderList = lazy(() => import("../pages/Order/List"));
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
   },
   {
     path: Routes.LOGIN,
+    loader: LoginValidator,
     element: (
       <Suspense fallback={<LoadingScreen />}>
         <Login />

@@ -1,16 +1,16 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Login from ".";
-import { useLogin } from "./hooks/UseLogin";
+import Login, { LoginInputLabel } from ".";
+import { UseLogin } from "./hooks/UseLogin";
 
 jest.mock("./hooks/UseLogin", () => ({
-  useLogin: jest.fn(),
+  UseLogin: jest.fn(),
 }));
 
 describe("Login Component", () => {
   beforeEach(() => {
-    (useLogin as jest.Mock).mockReturnValue({
+    (UseLogin as jest.Mock).mockReturnValue({
       handleLogin: jest.fn(),
       loading: false,
       error: null,
@@ -19,8 +19,8 @@ describe("Login Component", () => {
 
   test("renders login form with username and password fields", () => {
     render(<Login />);
-    expect(screen.getByLabelText(/Username/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(LoginInputLabel.USERNAME)).toBeInTheDocument();
+    expect(screen.getByLabelText(LoginInputLabel.PASSWORD)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Login" })).toBeInTheDocument();
   });
 
@@ -30,7 +30,7 @@ describe("Login Component", () => {
     const submitButton = screen.getByRole("button", { name: "Login" });
     fireEvent.click(submitButton);
 
-    expect(screen.getByLabelText(/Username/i)).toHaveAttribute(
+    expect(screen.getByLabelText(LoginInputLabel.USERNAME)).toHaveAttribute(
       "aria-invalid",
       "true"
     );
@@ -39,13 +39,13 @@ describe("Login Component", () => {
   test("shows error when password is empty and submit is clicked", () => {
     render(<Login />);
 
-    const usernameInput = screen.getByLabelText(/Username/i);
+    const usernameInput = screen.getByLabelText(LoginInputLabel.USERNAME);
     fireEvent.change(usernameInput, { target: { value: "testuser" } });
 
     const submitButton = screen.getByRole("button", { name: "Login" });
     fireEvent.click(submitButton);
 
-    expect(screen.getByLabelText(/Password/i)).toHaveAttribute(
+    expect(screen.getByLabelText(LoginInputLabel.PASSWORD)).toHaveAttribute(
       "aria-invalid",
       "true"
     );
@@ -53,7 +53,7 @@ describe("Login Component", () => {
 
   test("calls handleLogin with correct credentials when form is valid", () => {
     const mockHandleLogin = jest.fn();
-    (useLogin as jest.Mock).mockReturnValue({
+    (UseLogin as jest.Mock).mockReturnValue({
       handleLogin: mockHandleLogin,
       loading: false,
       error: null,
@@ -61,8 +61,8 @@ describe("Login Component", () => {
 
     render(<Login />);
 
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
+    const usernameInput = screen.getByLabelText(LoginInputLabel.USERNAME);
+    const passwordInput = screen.getByLabelText(LoginInputLabel.PASSWORD);
     const submitButton = screen.getByRole("button", { name: "Login" });
 
     fireEvent.change(usernameInput, { target: { value: "testuser" } });
@@ -73,7 +73,7 @@ describe("Login Component", () => {
   });
 
   test("displays error message if error prop is not null", () => {
-    (useLogin as jest.Mock).mockReturnValue({
+    (UseLogin as jest.Mock).mockReturnValue({
       handleLogin: jest.fn(),
       loading: false,
       error: "Login failed",
