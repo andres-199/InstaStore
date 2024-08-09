@@ -13,7 +13,7 @@ const options: ThemeOptions = {
       main: red.A400,
     },
     background: {
-      default: "#fff",
+      default: "#28cd6a0d",
     },
   },
   typography: {
