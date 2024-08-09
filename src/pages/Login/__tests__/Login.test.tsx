@@ -1,10 +1,10 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Login, { LoginInputLabel } from ".";
-import { UseLogin } from "./hooks/UseLogin";
+import Login, { LoginInputLabel } from "../";
+import { UseLogin } from "../hooks/UseLogin";
 
-jest.mock("./hooks/UseLogin", () => ({
+jest.mock("../hooks/UseLogin", () => ({
   UseLogin: jest.fn(),
 }));
 

@@ -25,10 +25,14 @@ const setSession = (session: UserSession) => {
   setCookies(session);
 };
 
+const clearSession = () => {
+  setSession({ token: "", userId: "" });
+};
+
 const hasSession = () => {
   const session = getSession();
   return !!session.token && !!session.userId;
 };
 
-const UserSessionService = { setSession, getSession, hasSession };
+const UserSessionService = { setSession, getSession, hasSession, clearSession };
 export default UserSessionService;

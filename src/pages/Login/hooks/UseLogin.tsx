@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginService from "../services/login.service";
+import AuthService from "../services/auth.service";
 import UserSession from "../../../interfaces/UserSession";
 import UserSessionService from "../../../services/userSession.service";
 import { Routes } from "../../../router/routes";
 
-const { login } = LoginService;
+const { login } = AuthService;
 const { setSession } = UserSessionService;
+
+export enum UseLoginError {
+  LOGIN_FAILED = "Login failed. Please check your credentials and try again.",
+}
 
 export const UseLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -15,9 +19,7 @@ export const UseLogin = () => {
 
   const validateLoginresponse = (response: UserSession) => {
     if (!response.token || !response.userId) {
-      throw new Error(
-        "Login failed. Please check your credentials and try again."
-      );
+      throw new Error(UseLoginError.LOGIN_FAILED);
     }
     return true;
   };

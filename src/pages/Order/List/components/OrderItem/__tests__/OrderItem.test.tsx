@@ -1,14 +1,18 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import OrderItem from ".";
-import Order from "../../interfaces/Order";
+import OrderItem from "..";
 import "@testing-library/jest-dom/extend-expect";
+import Order from "../../../../../../interfaces/Order";
 
 describe("OrderItem Component", () => {
   const mockOrder: Order = {
     id: "order-1234",
     client: "Juan Pérez",
     deliveryAddress: "Calle 123 # 45-67, Bogotá, Colombia",
+    coordinates: {
+      lat: 4.63385,
+      long: -74.08546,
+    },
   };
 
   const mockOnClickAssignStore = jest.fn();
